@@ -1,0 +1,138 @@
+@tb-hint-point-color: #dfff00;
+
+.tb-help-button {
+  position: fixed;
+  right: -30px;
+  top: 200px;
+  display: block;
+  padding: 0 15px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: red;
+  color: #fff !important;
+  .border-radius(0,0,4px,4px);
+  .opacity(.5);
+  z-index: 3;
+  &.is-active {
+    right: 0;
+  }
+  i {
+    &:before {
+      line-height: 30px;
+    }
+  }
+  &:hover {
+    .opacity(1);
+  }
+}
+
+body {
+  .tb-hint-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 99;
+  }
+  &.hint-is-showing {
+    [data-pbl-hint-order] {
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 50;
+      }
+    }
+  }
+}
+
+[data-pbl-hint-order] {
+  position: relative;
+  &.is-inline-block {
+    display: inline-block;
+  }
+}
+
+.entry-hint-point {
+  position: absolute;
+  z-index: 110;
+  .entry-blinking-point {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #aaa;
+    background: @tb-hint-point-color;
+    .border_radius(50%);
+    cursor: pointer;
+    &:before {
+      content: '';
+      position: absolute;
+      .border_radius(50%);
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: cd-pulse 2s infinite;
+    }
+  }
+  .entry-message {
+    text-align: left;
+    position: absolute;
+    z-index: 110;
+    width: 250px;
+    background: #fff;
+    line-height: 1.5;
+    .border_radius(4px);
+    padding: 15px;
+    right: 0;
+    top: 15px;
+    opacity: 0;
+    display: none;
+    margin-right: 30px;
+    .box-shadow(1px 1px 5px 0 rgba(0,0,0,.5));
+    > span {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #666;
+    }
+    .entry-actions {
+      text-align: right;
+      .tb-button {
+        line-height: 30px;
+        height: 30px;
+        padding: 0 10px;
+        margin: 0 5px;
+        font-size: 16px;
+        display: inline-block !important;
+        width: auto;
+        &.skip {
+        }
+      }
+    }
+  }
+}
+
+@keyframes cd-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: inset 0 0 2px 1px fade(@tb-hint-point-color, 80%);
+  }
+
+  50% {
+    box-shadow: inset 0 0 2px 1px fade(@tb-hint-point-color, 80%);
+  }
+
+100% {
+    transform: scale(2);
+    box-shadow: inset 0 0 2px 1px fade(@tb-hint-point-color, 0);
+  }
+}

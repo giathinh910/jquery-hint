@@ -11,13 +11,16 @@
     <title>Simple Hint JS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- Hint JS style -->
+    <link href="../dist/tb.hint.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,6 +30,10 @@
   </head>
 
   <body>
+
+  <a href="#" id="init-help" class="tb-help-button is-active" title="Hint">
+    I NEED HINT
+  </a>
 
     <div class="blog-masthead">
       <div class="container">
@@ -43,7 +50,7 @@
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">The Simple Hinting Plugin</h1>
+        <h1 class="blog-title" data-tb-hint-group="group-1" data-tb-hint-order="2" data-tb-hint-message="The Simple Hinting Plugin">The Simple Hinting Plugin</h1>
         <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
       </div>
 
@@ -156,7 +163,7 @@
     </div><!-- /.container -->
 
     <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p><span data-tb-hint-group="group-1" data-tb-hint-order="1" data-tb-hint-message="Blog template built for Bootstrap by @mdo.">Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</span></p>
       <p>
         <a href="#">Back to top</a>
       </p>
@@ -167,8 +174,17 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Hint JS -->
+    <script src="assets/js/jquery.easing.min.js"></script>
+    <script src="../dist/tb.hint.js"></script>
+    <script>
+      $(document).on('click', '#init-help', function (e) {
+          new TBHint({
+              group: 'group-1',
+              easing: ''
+          }).init();
+          e.preventDefault();
+      });
+    </script>
   </body>
 </html>
