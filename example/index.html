@@ -179,10 +179,8 @@
     <script src="../dist/tb.hint.js"></script>
     <script>
       $(document).on('click', '#init-help', function (e) {
-          new TBHint({
-              group: 'group-1',
-              easing: ''
-          }).init();
+          $('[data-tb-hint-group="group-1"]').TBHint({
+          });
           e.preventDefault();
       });
     </script>

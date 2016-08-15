@@ -107,8 +107,6 @@ body.hint-is-showing [data-pbl-hint-order]:before {
   width: 250px;
   background: #fff;
   line-height: 1.5;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
   padding: 15px;
   right: 0;
   top: 15px;
