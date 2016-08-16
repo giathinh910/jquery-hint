@@ -11,7 +11,8 @@
     var pluginName = 'TBHint',
         defaults   = {
             pointPosition: 'top-left',
-            messageBoxPosition: 'left'
+            messagePosition: 'left',
+            message: 'Please fill in message.'
         };
 
     // The actual plugin constructor
@@ -28,19 +29,84 @@
             currentHintIndex: 0
         };
         this.utils = {
-            buildPoint: function (message) {
-                var pointsHTML = '';
-                var style = this.parseCSS({
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-10px'
-                });
+            // Build hint using specific point object and Plugin object's options
+            buildHint: function (options, thisPlugin) {
+                // Extend global options and use specific point options
+                var pointOptions = $.extend({}, {
+                        pointPosition: thisPlugin.options.pointPosition,
+                        messagePosition: thisPlugin.options.messagePosition,
+                        message: thisPlugin.options.message
+                    }, options),
+                    pointsHTML   = '',
+                    styleJson    = {};
+
+                // Parsing point position
+                switch (pointOptions.pointPosition) {
+                    case 'top-left':
+                        styleJson = {
+                            position: 'absolute',
+                            top: '0',
+                            left: '0'
+                        };
+                        break;
+                    case 'top-center':
+                        styleJson = {
+                            position: 'absolute',
+                            top: '0',
+                            left: '50%'
+                        };
+                        break;
+                    case 'top-right':
+                        styleJson = {
+                            position: 'absolute',
+                            top: '0',
+                            right: '0'
+                        };
+                        break;
+                    case 'right-center':
+                        styleJson = {
+                            position: 'absolute',
+                            top: '50%',
+                            right: '0'
+                        };
+                        break;
+                    case 'bottom-right':
+                        styleJson = {
+                            position: 'absolute',
+                            bottom: '0',
+                            right: '0'
+                        };
+                        break;
+                    case 'bottom-center':
+                        styleJson = {
+                            position: 'absolute',
+                            bottom: '0',
+                            right: '50%'
+                        };
+                        break;
+                    case 'bottom-left':
+                        styleJson = {
+                            position: 'absolute',
+                            bottom: '0',
+                            left: '0'
+                        };
+                        break;
+                    case 'left-center':
+                        styleJson = {
+                            position: 'absolute',
+                            bottom: '50%',
+                            left: '0'
+                        };
+                        break;
+                }
+
+                // Build point html
                 pointsHTML +=
-                    '<div class="entry-hint-point" style="' + style + '">'
+                    '<div class="entry-hint-point" style="' + this.parseCSS(styleJson) + '">'
                     + '<div class="entry-blinking-point"></div>'
                     + '<div class="entry-message">'
                     + '<span>'
-                    + message
+                    + pointOptions.message
                     + '</span>'
                     + '<div class="entry-actions">'
                     + '<a href="#" class="tb-button skip">Skip</a>'
@@ -66,7 +132,8 @@
                     });
 
                     // Animating message
-                    $point.find('.entry-message')
+                    $point
+                    .find('.entry-message')
                     .stop()
                     .css({
                         display: "block"
@@ -140,13 +207,20 @@
         this.buildPoints = function () {
             var _this = this;
             this.vars.els.each(function (index, el) {
-                var _position = $(el).css('position') === 'static' ? 'relative' : $(el).css('position');
+                var position = $(el).css('position') === 'static' ? 'relative' : $(el).css('position');
                 $(el).css({
                     'z-index': 100,
-                    'position': _position,
-                    'overflow': 'visible'
+                    position: position,
+                    overflow: 'visible'
                 });
-                $(el).append(_this.utils.buildPoint($(el).data('tb-hint-message')));
+                // Get specific point's options,
+                // build point using these option extend global options (pass _this to get global options)
+                // then append to target
+                $(el).append(_this.utils.buildHint({
+                    pointPosition: $(el).data('tb-hint-point-position'),
+                    messagePosition: $(el).data('tb-hint-message-position'),
+                    message: $(el).data('tb-hint-message')
+                }, _this));
             });
         };
         this.handleActions = function () {
