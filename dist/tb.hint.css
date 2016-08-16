@@ -76,13 +76,17 @@ body.hint-is-showing [data-pbl-hint-order]:before {
 .entry-hint-point {
   position: absolute;
   z-index: 110;
+  width: 1px;
+  height: 1px;
 }
 .entry-hint-point .entry-blinking-point {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   width: 20px;
   height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
   border: 1px solid #aaa;
   background: #dfff00;
   -webkit-border-radius: 50%;
@@ -108,8 +112,6 @@ body.hint-is-showing [data-pbl-hint-order]:before {
   background: #fff;
   line-height: 1.5;
   padding: 15px;
-  right: 0;
-  top: 15px;
   opacity: 0;
   display: none;
   margin-right: 30px;

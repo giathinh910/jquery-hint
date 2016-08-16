@@ -11,7 +11,8 @@
     var pluginName = 'TBHint',
         defaults   = {
             pointPosition: 'top-left',
-            messagePosition: 'left',
+            messageBoxWidth: 250,
+            messageBoxPosition: 'left',
             message: 'Please fill in message.'
         };
 
@@ -34,69 +35,61 @@
                 // Extend global options and use specific point options
                 var pointOptions = $.extend({}, {
                         pointPosition: thisPlugin.options.pointPosition,
-                        messagePosition: thisPlugin.options.messagePosition,
-                        message: thisPlugin.options.message
                     }, options),
                     pointsHTML   = '',
-                    styleJson    = {};
+                    styleJson    = {
+                        position: 'absolute'
+                    };
 
                 // Parsing point position
                 switch (pointOptions.pointPosition) {
                     case 'top-left':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             top: '0',
                             left: '0'
-                        };
+                        });
                         break;
                     case 'top-center':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             top: '0',
                             left: '50%'
-                        };
+                        });
                         break;
                     case 'top-right':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             top: '0',
                             right: '0'
-                        };
+                        });
                         break;
                     case 'right-center':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             top: '50%',
                             right: '0'
-                        };
+                        });
                         break;
                     case 'bottom-right':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             bottom: '0',
                             right: '0'
-                        };
+                        });
                         break;
                     case 'bottom-center':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             bottom: '0',
                             right: '50%'
-                        };
+                        });
                         break;
                     case 'bottom-left':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             bottom: '0',
                             left: '0'
-                        };
+                        });
                         break;
                     case 'left-center':
-                        styleJson = {
-                            position: 'absolute',
+                        styleJson = $.extend(styleJson, {
                             bottom: '50%',
                             left: '0'
-                        };
+                        });
                         break;
                 }
 
@@ -104,7 +97,57 @@
                 pointsHTML +=
                     '<div class="entry-hint-point" style="' + this.parseCSS(styleJson) + '">'
                     + '<div class="entry-blinking-point"></div>'
-                    + '<div class="entry-message">'
+                    + this.buildHintMessage(options, thisPlugin)
+                    + '</div>'
+                ;
+                return pointsHTML;
+            },
+            buildHintMessage: function (options, thisPlugin) {
+                // Extend global options and use specific point options
+                var pointOptions = $.extend({}, {
+                        messageBoxWidth: thisPlugin.options.messageBoxWidth,
+                        messageBoxPosition: thisPlugin.options.messageBoxPosition,
+                        message: thisPlugin.options.message
+                    }, options),
+                    messageHTML  = '',
+                    styleJson    = {
+                        position: 'absolute',
+                        width: pointOptions.messageBoxWidth + 'px'
+                    };
+
+                // Parsing message position
+                switch (pointOptions.messageBoxPosition) {
+                    case 'top':
+                        styleJson = $.extend(styleJson, {
+                            bottom: '15px',
+                            left: '50%',
+                            'margin-left': -thisPlugin.options.messageBoxWidth / 2 + 'px'
+                        });
+                        break;
+                    case 'right':
+                        styleJson = $.extend(styleJson, {
+                            top: '-15px', // @todo: align middle
+                            left: '15px'
+                        });
+                        break;
+                    case 'bottom':
+                        styleJson = $.extend(styleJson, {
+                            top: '15px',
+                            left: '50%',
+                            'margin-left': -thisPlugin.options.messageBoxWidth / 2 + 'px'
+                        });
+                        break;
+                    case 'left':
+                        styleJson = $.extend(styleJson, {
+                            top: '-15px', // @todo: align middle
+                            right: '15px'
+                        });
+                        break;
+                }
+
+                // Build point html
+                messageHTML +=
+                    '<div class="entry-message" style="' + this.parseCSS(styleJson) + '">'
                     + '<span>'
                     + pointOptions.message
                     + '</span>'
@@ -113,9 +156,8 @@
                     + '<a href="#" class="tb-button next">Next</a>'
                     + '</div>'
                     + '</div>'
-                    + '</div>'
                 ;
-                return pointsHTML;
+                return messageHTML;
             },
             //
             parseCSS: function (json) {
@@ -125,7 +167,7 @@
                 });
                 return output.substring(0, output.length - 1);
             },
-            // Show hint
+            // Show a single hint
             hint: {
                 show: function ($point, nextButtonText) {
                     // Make sure the current highlighting el is on top
@@ -220,7 +262,8 @@
                 // then append to target
                 $(el).append(_this.utils.buildHint({
                     pointPosition: $(el).data('tb-hint-point-position'),
-                    messagePosition: $(el).data('tb-hint-message-position'),
+                    messageBoxWidth: $(el).data('tb-hint-message-box-width'),
+                    messageBoxPosition: $(el).data('tb-hint-message-box-position'),
                     message: $(el).data('tb-hint-message')
                 }, _this));
             });
