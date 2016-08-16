@@ -117,6 +117,7 @@
                 ;
                 return pointsHTML;
             },
+            //
             parseCSS: function (json) {
                 var output = '';
                 $.each(json, function (index, el) {
@@ -124,7 +125,8 @@
                 });
                 return output.substring(0, output.length - 1);
             },
-            message: {
+            // Show hint
+            hint: {
                 show: function ($point, nextButtonText) {
                     // Make sure the current highlighting el is on top
                     $point.closest('[data-tb-hint-order]').css({
@@ -199,7 +201,7 @@
                 // Set current hint index = 0 (the first one)
                 this.vars.currentHintIndex = 0;
                 // Show the first message hint
-                this.utils.message.show($(this.vars.els[this.vars.currentHintIndex]));
+                this.utils.hint.show($(this.vars.els[this.vars.currentHintIndex]));
             }
             // Handle action (next/skip)
             this.handleActions();
@@ -243,16 +245,16 @@
             var _this = this;
             // var currentHintIndex = _this.vars.currentHintIndex;
             // Hide current hint
-            _this.utils.message.hide($(_this.vars.els[_this.vars.currentHintIndex]));
+            _this.utils.hint.hide($(_this.vars.els[_this.vars.currentHintIndex]));
             // Check if next hint exist
             if ($(_this.vars.els[_this.vars.currentHintIndex + 1]).length > 0) {
                 // Proceed to next hint
                 _this.vars.currentHintIndex++;
                 // Consider next button text: Next or Finish
                 if ($(_this.vars.els[_this.vars.currentHintIndex + 1]).length == 0) {
-                    _this.utils.message.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Finish');
+                    _this.utils.hint.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Finish');
                 } else {
-                    _this.utils.message.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Next');
+                    _this.utils.hint.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Next');
                 }
             }
             // If next hint doesn't exist
@@ -264,14 +266,14 @@
             var _this = this;
             // var currentHintIndex = _this.vars.currentHintIndex;
             // Hide current hint
-            _this.utils.message.hide($(_this.vars.els[_this.vars.currentHintIndex]));
+            _this.utils.hint.hide($(_this.vars.els[_this.vars.currentHintIndex]));
             // Proceed to next hint
             _this.vars.currentHintIndex = index;
             // Consider next button text: Next or Finish
             if ($(_this.vars.els[_this.vars.currentHintIndex + 1]).length == 0) {
-                _this.utils.message.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Finish');
+                _this.utils.hint.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Finish');
             } else {
-                _this.utils.message.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Next');
+                _this.utils.hint.show($(_this.vars.els[_this.vars.currentHintIndex]), 'Next');
             }
         };
         // Find point index in els list
@@ -316,3 +318,9 @@
     }
 
 })(jQuery, window, document);
+
+
+$(document).on('click', '#pbl-help', function (e) {
+    $('[data-tb-hint-group="group-1"]').TBHint();
+    e.preventDefault();
+});
