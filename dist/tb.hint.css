@@ -119,6 +119,74 @@ body.hint-is-showing [data-pbl-hint-order]:before {
   -moz-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
 }
+.entry-hint-point .entry-message:before,
+.entry-hint-point .entry-message:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.entry-hint-point .entry-message.is-left:before {
+  top: 14px;
+  right: -11px;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 11px solid rgba(0, 0, 0, 0.2);
+}
+.entry-hint-point .entry-message.is-left:after {
+  top: 15px;
+  right: -10px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #fff;
+}
+.entry-hint-point .entry-message.is-right:before {
+  top: 14px;
+  left: -11px;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-right: 11px solid rgba(0, 0, 0, 0.2);
+}
+.entry-hint-point .entry-message.is-right:after {
+  top: 15px;
+  left: -10px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #fff;
+}
+.entry-hint-point .entry-message.is-top:before {
+  bottom: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 11px solid rgba(0, 0, 0, 0.2);
+}
+.entry-hint-point .entry-message.is-top:after {
+  bottom: -10px;
+  left: 50%;
+  margin-left: -10px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #fff;
+}
+.entry-hint-point .entry-message.is-bottom:before {
+  top: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid #fff;
+}
+.entry-hint-point .entry-message.is-bottom:after {
+  top: -10px;
+  left: 50%;
+  margin-left: -10px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+}
 .entry-hint-point .entry-message > span {
   display: block;
   margin-bottom: 15px;

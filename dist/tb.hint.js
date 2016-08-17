@@ -113,41 +113,42 @@
                     styleJson    = {
                         position: 'absolute',
                         width: pointOptions.messageBoxWidth + 'px'
-                    };
+                    },
+                    messageClasses = ['entry-message', 'is-' + pointOptions.messageBoxPosition];
 
                 // Parsing message position
                 switch (pointOptions.messageBoxPosition) {
                     case 'top':
                         styleJson = $.extend(styleJson, {
-                            bottom: '15px',
+                            bottom: '28px',
                             left: '50%',
                             'margin-left': -thisPlugin.options.messageBoxWidth / 2 + 'px'
                         });
                         break;
                     case 'right':
                         styleJson = $.extend(styleJson, {
-                            top: '-15px', // @todo: align middle
-                            left: '15px'
+                            top: '-24px', // @todo: align middle
+                            left: '28px'
                         });
                         break;
                     case 'bottom':
                         styleJson = $.extend(styleJson, {
-                            top: '15px',
+                            top: '28px',
                             left: '50%',
                             'margin-left': -thisPlugin.options.messageBoxWidth / 2 + 'px'
                         });
                         break;
                     case 'left':
                         styleJson = $.extend(styleJson, {
-                            top: '-15px', // @todo: align middle
-                            right: '15px'
+                            top: '-24px', // @todo: align middle
+                            right: '28px'
                         });
                         break;
                 }
 
                 // Build point html
                 messageHTML +=
-                    '<div class="entry-message" style="' + this.parseCSS(styleJson) + '">'
+                    '<div class="' + messageClasses.join(' ') + '" style="' + this.parseCSS(styleJson) + '">'
                     + '<span>'
                     + pointOptions.message
                     + '</span>'
@@ -361,9 +362,3 @@
     }
 
 })(jQuery, window, document);
-
-
-$(document).on('click', '#pbl-help', function (e) {
-    $('[data-tb-hint-group="group-1"]').TBHint();
-    e.preventDefault();
-});
